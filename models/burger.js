@@ -1,3 +1,9 @@
 const orm  = require('../config/orm')
 
-module.exports = orm.selectALL('burgers');
+const burger =  {
+  all(cb) {
+  orm.all('burgers', (res) => cb(res));
+  },
+}
+  
+  module.exports = burger
