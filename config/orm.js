@@ -35,13 +35,38 @@ const objToSql = (ob) => {
 const orm = {
   all(tableInput, cb) {
     const queryString = `SELECT * FROM ${tableInput}`;
+    console.log(queryString)
     connection.query(queryString, [tableInput], (err, res) => {
         if(err) throw err;
+
         cb(res)
       })
-  }
+  },
+  create(tableInput, burgerName, cb) {
+    const queryString = `INSERT INTO ${tableInput} (burger_name) VALUES (${burgerName}`;
 
-  
+    console.log(queryString);
+
+    connection.query(queryString, [tableInput, burgerName], (err, result) => {
+      if (err) throw err;
+
+      cb(result);
+    });
+  },
+
+  delete(table, condition, cb) {
+    let queryString = `DELETE FROM ${table}`;
+    queryString += ' WHERE ';
+    queryString += condition;
+
+    connection.query(queryString, (err, result) => {
+      if (err) {
+        throw err;
+      }
+
+      cb(result);
+    });
+  },
 }
 
 module.exports = orm;
