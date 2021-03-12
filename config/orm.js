@@ -42,29 +42,26 @@ const orm = {
         cb(res)
       })
   },
-  create(tableInput, burgerName, cb) {
-    const queryString = `INSERT INTO ${tableInput} (burger_name) VALUES (${burgerName}`;
 
-    console.log(queryString);
+  create(table, burgerName, cb) {
+    const queryString = `INSERT INTO ?? SET ?`;
 
-    connection.query(queryString, [tableInput, burgerName], (err, result) => {
+    connection.query(queryString, [table, burgerName], (err, res) => {
       if (err) throw err;
 
-      cb(result);
+      cb(res);
     });
   },
 
-  delete(table, condition, cb) {
-    let queryString = `DELETE FROM ${table}`;
-    queryString += ' WHERE ';
-    queryString += condition;
+  update(table, devoured, column, value, cb) {
+    let queryString = `UPDATE ?? SET ? WHERE ?? = ?`;
 
-    connection.query(queryString, (err, result) => {
+    connection.query(queryString, [table, devoured, column, value, cb], (err, res) => {
       if (err) {
         throw err;
       }
 
-      cb(result);
+      cb(res);
     });
   },
 }

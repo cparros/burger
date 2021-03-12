@@ -3,55 +3,21 @@ document.addEventListener('DOMContentLoaded', (event) => {
     console.info('DOM loaded');
   }
 
-  const changeDevouredBtns = document.querySelectorAll('.change-devoured')
-
-  if (changeDevouredBtns) {
-    changeDevouredBtns.forEach((button) => {
-      button.addEventListener('click', (e) => {
-        // Grabs the id of the element that goes by the name, "id"
-        const id = e.target.getAttribute('data-id');
-        const newDevoured = e.target.getAttribute('data-newdevoured');
-
-        const newDevouredState = {
-          devoured: newDevoured,
-        };
-
-        fetch(`/api/burgers/${id}`, {
-          method: 'PUT',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-
-          // make sure to serialize the JSON body
-          body: JSON.stringify(newDevouredState),
-        }).then((response) => {
-          // Check that the response is all good
-          // Reload the page so the user can see the new quote
-          if (response.ok) {
-            console.log(`changed Devoured to: ${newDevoured}`);
-            location.reload('/');
-          } else {
-            alert('something went wrong!');
-          }
-        });
-      });
-    });
-  }
 
 
-
-  const createBurgerBtn = document.getElementById('create-button');
+  const createBurgerBtn = document.getElementById('create-form');
 
   if (createBurgerBtn) {
     createBurgerBtn.addEventListener('submit', (e) => {
       e.preventDefault();
       console.log('clicked')
+      
       // Grabs the value of the textarea that goes by the name, "quote"
       const newBurger = {
-        name: document.getElementById('bu').value.trim(),
+        burger_name: document.getElementById('bu').value.trim(),
         // sleepy: document.getElementById('devoured').checked,
       };
+      
       // Send POST request to create a new quote
       fetch('/api/burgers', {
         method: 'POST',
@@ -62,10 +28,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
         // make sure to serialize the JSON body
         body: JSON.stringify(newBurger),
+        
       }).then(() => {
         // Empty the form
         document.getElementById('bu').value = '';
-
+        console.log(newBurger)
         // Reload the page so the user can see the new quote
         console.log('Created a new Burger!');
         location.reload();
@@ -74,19 +41,28 @@ document.addEventListener('DOMContentLoaded', (event) => {
   }
 
 
-  const deleteBurgerBtns = document.querySelectorAll('.delete-burger');
-
+  const devourBurgerBtns = document.querySelectorAll('.change-devoured');
   // Set up the event listeners for each delete button
-  deleteBurgerBtns.forEach((button) => {
+  devourBurgerBtns.forEach((button) => {
     button.addEventListener('click', (e) => {
       const id = e.target.getAttribute('data-id');
 
+      const devouredBurger = {
+        devoured: true
+      }
+
       // Send the delete request
       fetch(`/api/burgers/${id}`, {
-        method: 'DELETE',
+        method: 'PUT',
+        headers: {
+          Accept: "appliction/json",
+          'content-type': 'application/json'
+        },
+
+        body: JSON.stringify(devouredBurger),
       }).then((res) => {
         console.log(res);
-        console.log(`Deleted burgers: ${id}`);
+        console.log(`changed id: ${id}`);
 
         // Reload the page
         location.reload();
