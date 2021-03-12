@@ -22,16 +22,13 @@ router.post('/api/burgers', (req, res) => {
 });
 
 router.put('/api/burgers/:id', (req, res) => {
+  //make sure you dont have any string input before request param you will get a duplicate error
   const condition = `${req.params.id}`
 
   console.log('condition', condition);
 
   burger.update(
-    {
-      devoured: req.body.devoured,
-    },
-    condition,
-    (result) => {
+    {devoured: req.body.devoured}, condition, (result) => {
       if (result.changedRows === 0) {
         // If no rows were changed, then the ID must not exist, so 404
         return res.status(404).end();
