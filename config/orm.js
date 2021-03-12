@@ -11,20 +11,21 @@ const orm = {
       })
   },
 
-  create(table, burgerName, cb) {
+  create(tableName, burgerName, cb) {
+    //Look at cats activity and see query construction breakdown
     const queryString = `INSERT INTO ?? SET ?`;
 
-    connection.query(queryString, [table, burgerName], (err, res) => {
+    connection.query(queryString, [tableName, burgerName], (err, res) => {
       if (err) throw err;
 
       cb(res);
     });
   },
 
-  update(table, devoured, column, value, cb) {
+  update(tableName, devoured, column, value, cb) {
     let queryString = `UPDATE ?? SET ? WHERE ?? = ?`;
 
-    connection.query(queryString, [table, devoured, column, value, cb], (err, res) => {
+    connection.query(queryString, [tableName, devoured, column, value, cb], (err, res) => {
       if (err) {
         throw err;
       }
