@@ -1,5 +1,6 @@
 const mysql = require('mysql');
 
+//let the connection exist so you can define variable for deployed host
 let connection;
 // Set up our connection information
 if(process.env.JAWSDB_URL) {
@@ -16,10 +17,10 @@ if(process.env.JAWSDB_URL) {
 // Connect to the database
 connection.connect((err) => {
   if (err) {
-    console.error(`error connecting: ${err.stack}`);
+    console.error(`There error connecting: ${err.stack}`);
     return;
   }
-  console.log(`SUCCESS connected as id ${connection.threadId}`);
+  console.log(`SUCCESS you have connected at id ${connection.threadId}`);
 });
 
 // Export connection
