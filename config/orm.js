@@ -12,7 +12,7 @@ const orm = {
   },
 
   create(tableName, burgerName, cb) {
-    //Look at cats activity and see query construction breakdown
+    //Look at cats activity and see query construction breakdown DONT USE CAT SYNTAX ITS TRASH make Qs your self
     const queryString = `INSERT INTO ?? SET ?`;
 
     connection.query(queryString, [tableName, burgerName], (err, res) => {

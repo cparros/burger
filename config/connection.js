@@ -1,3 +1,4 @@
+//require sql for connection
 const mysql = require('mysql');
 
 //let the connection exist so you can define variable for deployed host
